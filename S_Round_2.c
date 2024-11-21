@@ -1,13 +1,13 @@
-#include <stdio.h>
+#include <stdbool.h>
 #include <ctype.h>
+#include <stdio.h>
 
 int is_white(const char c)
 {return c == ' ' || c == '\t' || c == '\n';}
 
 void change_whites(char string[])
 {
-    if (!string)
-        return;
+    if (!string) return;
     while (*string)
     {
         if (is_white(*string))
@@ -21,15 +21,13 @@ int guess_eval(const int guess, const int my_number)
 
 int leap_year(const int year)
 {
-    if (year < 0)
-        return -1;
+    if (year < 0) return -1;
     return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 1 : 0;
 }
 
 int count_positives(const int size, const int array[])
 {
-    if (!array)
-        return -1;
+    if (!array) return -1;
     int count = 0;
     for (int i = 0; i < size; ++i)
     {count += (array[i] > 0);}
@@ -38,8 +36,7 @@ int count_positives(const int size, const int array[])
 
 int count_whites(const char string[])
 {
-    if (!string)
-        return -1;
+    if (!string) return -1;
     const char *ptr = string;
     int count = 0;
     while (*ptr)
@@ -52,34 +49,25 @@ int count_whites(const char string[])
 
 int direction_correction(const int degree)
 {
-    if (degree % 90 != 0 || degree < 0)
-        return -1;
+    if (degree % 90 != 0 || degree < 0) return -1;
     return (degree % 360 + 360) % 360;
 }
 
 int all_positives(const int size, const int array[])
 {
-    if (!array || size <= 0)
-        return -1;
+    if (!array || size <= 0) return -1;
     const int *end = array + size;
     for (const int *ptr = array; ptr < end; ++ptr)
-    {
-        if (*ptr <= 0)
-            return 0;
-    }
+    {if (*ptr <= 0) return 0;}
     return 1;
 }
 
 int last_positive(const int size, const int array[])
 {
-    if (!array || size <= 0)
-        return -1;
+    if (!array || size <= 0) return -1;
     const int *end = array + size;
     for (const int *ptr = end - 1; ptr >= array; --ptr)
-    {
-        if (*ptr > 0)
-            return *ptr;
-    }
+    {if (*ptr > 0) return *ptr;}
     return -1;
 }
 
@@ -88,8 +76,7 @@ int binary_num(const int num)
 
 void swap_sign(const int size, int array[])
 {
-    if (!array)
-        return;
+    if (!array) return;
     for (int *ptr = array, *end = array + size; ptr < end; ++ptr)
     {*ptr = -*ptr;}
 }
@@ -99,15 +86,13 @@ int div_by_3(const int num)
 
 int same_case(const char a, const char b)
 {
-    if (!isalpha(a) || !isalpha(b))
-        return -1;
+    if (!isalpha(a) || !isalpha(b)) return -1;
     return (isupper(a) == isupper(b)) || (islower(a) == islower(b));
 }
 
 int find_first_A(const char string[])
 {
-    if (!string)
-        return -1;
+    if (!string) return -1;
     for (const char *ptr = string; *ptr; ++ptr)
     {
         if (tolower(*ptr) == 'a')
@@ -118,10 +103,19 @@ int find_first_A(const char string[])
 
 void string_to_upper(char string[])
 {
-    if (!string)
-        return;
+    if (!string) return;
     for (char *ptr = string; *ptr; ++ptr)
     {*ptr = toupper(*ptr);}
+}
+
+int is_prime(const int num)
+{
+    if (num <= 1) return 0;
+    if (num <= 3) return 1;
+    if (num % 2 == 0 || num % 3 == 0) return 0;
+    for (int i = 5; i * i <= num; i += 6)
+    {if (num % i == 0 || num % (i + 2) == 0) return 0;}
+    return 1;
 }
 
 int main()
@@ -135,4 +129,5 @@ int main()
     printf("%d %d %d\n", direction_correction(-90), direction_correction(540), direction_correction(180));
     printf("%d %d %d\n", same_case('a', 'f'), same_case('L', 'g'), same_case('#', 'P'));
     printf("%d\n", find_first_A(NULL));
+    printf("%d %d\n", is_prime(31), is_prime(33));
 }
